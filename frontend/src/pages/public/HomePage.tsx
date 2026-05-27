@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Code, Search, Smartphone, Zap, Camera, Briefcase, Mail } from 'lucide-react';
+import { ArrowRight, Code, Search, Smartphone, Zap, Camera, Briefcase, Mail, Sparkles, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { apiClient } from '../../api/client';
@@ -34,128 +34,285 @@ export function HomePage() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: 'easeOut' },
+    },
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-16">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
+    <div className="flex flex-col min-h-screen bg-dark-bg overflow-hidden">
+      {/* ===== HERO SECTION ===== */}
+      <section className="relative min-h-[100vh] flex items-center justify-center overflow-hidden pt-16">
+        {/* Animated Background Blobs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-[100px] animate-blob" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-cyan/20 rounded-full blur-[100px] animate-blob" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-neon-blue/15 rounded-full blur-[80px] animate-float" />
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark-bg/50 to-dark-bg pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="max-w-5xl mx-auto"
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-              Transforming Ideas Into <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400">
-                Digital Excellence
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-              We build enterprise-grade software and data-driven marketing strategies that scale your business to new heights.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/portfolio" className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-gray-100 transition-all flex items-center justify-center gap-2 group">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neon-purple/10 border border-neon-purple/30 mb-8"
+            >
+              <Sparkles size={16} className="text-neon-purple" />
+              <span className="text-sm font-medium text-neon-purple">Welcome to the Future</span>
+            </motion.div>
+
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter mb-6 leading-tight"
+            >
+              Transforming Ideas Into{' '}
+              <br className="hidden md:block" />
+              <span className="gradient-text-primary">Digital Excellence</span>
+            </motion.h1>
+
+            {/* Subheading */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed font-light"
+            >
+              We build enterprise-grade software and data-driven marketing strategies that scale your business to new heights. Experience the power of innovation with cutting-edge technology and world-class design.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            >
+              <Link
+                to="/portfolio"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-neon-purple to-neon-blue text-white font-semibold hover:shadow-neon transition-all duration-300 flex items-center justify-center gap-2 group hover-lift"
+              >
                 View Our Work
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
               </Link>
-              <Link to="/contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 text-white font-semibold hover:bg-white/5 backdrop-blur-sm transition-all flex items-center justify-center">
+              <Link
+                to="/contact"
+                className="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-neon-cyan/50 text-white font-semibold hover:bg-neon-cyan/10 backdrop-blur-sm transition-all duration-300 flex items-center justify-center group hover-glow"
+              >
                 Get a Free Consultation
+                <Rocket className="ml-2 group-hover:scale-110 transition-transform" size={20} />
               </Link>
-            </div>
+            </motion.div>
+
+            {/* Scroll Indicator */}
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-xs text-gray-400 uppercase tracking-widest">Scroll to explore</span>
+                <div className="w-6 h-10 border-2 border-neon-purple/30 rounded-full flex justify-center">
+                  <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="w-1 h-2 bg-neon-purple rounded-full mt-2"
+                  />
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Services Preview Section */}
-      <section className="py-24 bg-black/50 border-y border-white/5 relative z-10">
+      {/* ===== TRUSTED BY SECTION ===== */}
+      <section className="py-20 bg-black/30 border-y border-white/5 relative z-10">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Our Expertise</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">Comprehensive solutions tailored for modern businesses.</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <p className="text-gray-400 text-sm uppercase tracking-widest mb-4">Trusted by industry leaders</p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Code, title: "Web Development", desc: "High-performance applications built with modern frameworks." },
-              { icon: Smartphone, title: "Mobile Apps", desc: "Native and cross-platform mobile experiences." },
-              { icon: Search, title: "SEO Optimization", desc: "Data-driven strategies to dominate search results." },
-              { icon: Zap, title: "Digital Marketing", desc: "Targeted campaigns that drive real growth." },
-            ].map((service, i) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="glass p-8 rounded-2xl group hover:border-blue-500/50 transition-colors"
-              >
-                <div className="h-12 w-12 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <service.icon size={24} />
+          {/* Logo Marquee */}
+          <div className="relative overflow-hidden">
+            <motion.div
+              animate={{ x: [-1000, 0] }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              className="flex gap-12 whitespace-nowrap"
+            >
+              {['Google', 'Microsoft', 'Amazon', 'Apple', 'Meta', 'Tesla', 'Netflix', 'Stripe'].map((company) => (
+                <div key={company} className="flex items-center gap-3 px-6 py-3 glass rounded-lg hover-glow transition-all">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neon-purple to-neon-cyan" />
+                  <span className="font-semibold text-gray-300">{company}</span>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{service.desc}</p>
-              </motion.div>
-            ))}
+              ))}
+              {['Google', 'Microsoft', 'Amazon', 'Apple', 'Meta', 'Tesla', 'Netflix', 'Stripe'].map((company) => (
+                <div key={`${company}-2`} className="flex items-center gap-3 px-6 py-3 glass rounded-lg hover-glow transition-all">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neon-purple to-neon-cyan" />
+                  <span className="font-semibold text-gray-300">{company}</span>
+                </div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Trending on Social Section */}
-      <section className="py-24 relative z-10">
+      {/* ===== FEATURES SECTION ===== */}
+      <section className="py-32 relative z-10 section-gradient">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Trending on Social</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">See our latest updates, insights, and behind-the-scenes on LinkedIn and Instagram.</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Our Expertise</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+              Comprehensive solutions tailored for modern businesses with cutting-edge technology and premium design.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {[
+              { icon: Code, title: 'Web Development', desc: 'High-performance applications built with modern frameworks.' },
+              { icon: Smartphone, title: 'Mobile Apps', desc: 'Native and cross-platform mobile experiences.' },
+              { icon: Search, title: 'SEO Optimization', desc: 'Data-driven strategies to dominate search results.' },
+              { icon: Zap, title: 'Digital Marketing', desc: 'Targeted campaigns that drive real growth.' },
+            ].map((service, i) => (
+              <motion.div
+                key={service.title}
+                variants={itemVariants}
+                className="group glass p-8 rounded-2xl hover:border-neon-purple/50 transition-all duration-300 hover-lift"
+              >
+                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-neon-purple/20 to-neon-cyan/20 text-neon-purple flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <service.icon size={28} />
+                </div>
+                <h3 className="text-xl font-display font-bold mb-3">{service.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{service.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ===== SOCIAL SECTION ===== */}
+      <section className="py-32 relative z-10">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Trending on Social</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+              See our latest updates, insights, and behind-the-scenes on LinkedIn and Instagram.
+            </p>
+          </motion.div>
 
           {socialPosts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
               {socialPosts.map((post, i) => (
                 <motion.div
                   key={post.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glass rounded-2xl overflow-hidden shadow-lg border border-white/5 relative"
+                  variants={itemVariants}
+                  className="glass rounded-2xl overflow-hidden shadow-lg border border-white/5 relative group hover-lift"
                 >
                   <div className="absolute top-4 right-4 z-20 h-10 w-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center shadow-md border border-white/10">
-                    {post.platform === 'linkedin' ? <Briefcase className="text-blue-500" /> : <Camera className="text-pink-500" />}
+                    {post.platform === 'linkedin' ? (
+                      <Briefcase className="text-neon-blue" />
+                    ) : (
+                      <Camera className="text-neon-cyan" />
+                    )}
                   </div>
-                  {/* Dangerously setting HTML for embeds - careful in production, but okay if admin controls it */}
-                  <div className="w-full min-h-[400px] flex items-center justify-center bg-[#111]" dangerouslySetInnerHTML={{ __html: post.embed_code }} />
+                  <div
+                    className="w-full min-h-[400px] flex items-center justify-center bg-[#111]"
+                    dangerouslySetInnerHTML={{ __html: post.embed_code }}
+                  />
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           ) : (
-            <div className="text-center p-12 glass rounded-2xl border border-white/5">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-center p-12 glass rounded-2xl border border-white/5"
+            >
               <p className="text-gray-400">No recent social posts to display right now.</p>
-            </div>
+            </motion.div>
           )}
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="py-24 bg-gradient-to-b from-[#111] to-blue-900/10 border-t border-white/5 relative z-10">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto glass rounded-3xl p-8 md:p-16 text-center border border-blue-500/20 shadow-[0_0_50px_rgba(37,99,235,0.1)] relative overflow-hidden">
-            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500/20 blur-[100px] rounded-full" />
-            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-violet-500/20 blur-[100px] rounded-full" />
-            
-            <div className="relative z-10">
-              <div className="h-16 w-16 mx-auto bg-gradient-to-br from-blue-500 to-violet-500 rounded-full flex items-center justify-center mb-6 shadow-lg">
+      {/* ===== NEWSLETTER SECTION ===== */}
+      <section className="py-32 bg-gradient-to-b from-[#111] to-neon-purple/10 border-t border-white/5 relative z-10 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-0 right-0 -mr-40 -mt-40 w-80 h-80 bg-neon-purple/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 left-0 -ml-40 -mb-40 w-80 h-80 bg-neon-cyan/20 blur-[120px] rounded-full" />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto glass rounded-3xl p-8 md:p-16 text-center border border-neon-purple/30 shadow-[0_0_50px_rgba(124,58,237,0.2)]"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="h-16 w-16 mx-auto bg-gradient-to-br from-neon-purple to-neon-cyan rounded-full flex items-center justify-center mb-6 shadow-neon">
                 <Mail className="text-white" size={32} />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Stay Ahead of the Curve</h2>
-              <p className="text-gray-300 mb-8 max-w-xl mx-auto text-lg">
+              <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">Stay Ahead of the Curve</h2>
+              <p className="text-gray-300 mb-10 max-w-xl mx-auto text-lg leading-relaxed">
                 Join our newsletter to get the latest insights on digital marketing trends, tech innovations, and exclusive offers delivered straight to your inbox.
               </p>
-              
+
               <form onSubmit={handleSubscribe} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
                 <input
                   type="email"
@@ -163,35 +320,47 @@ export function HomePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
-                  className="flex-1 bg-black/50 border border-white/10 rounded-full px-6 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="flex-1 input-glass"
                 />
-                <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-full transition-all shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]">
+                <button
+                  type="submit"
+                  className="btn-primary whitespace-nowrap"
+                >
                   Subscribe
                 </button>
               </form>
               {newsletterStatus && (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 text-sm font-medium text-blue-400">
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 text-sm font-medium text-neon-cyan"
+                >
                   {newsletterStatus}
                 </motion.p>
               )}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-blue-900/20" />
+      {/* ===== FINAL CTA SECTION ===== */}
+      <section className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-neon-purple/10 via-transparent to-neon-cyan/10" />
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto glass p-12 rounded-3xl"
+            className="max-w-3xl mx-auto glass p-12 rounded-3xl border border-neon-purple/30"
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to scale your business?</h2>
-            <p className="text-gray-300 mb-8 text-lg">Let's discuss how we can help you achieve your goals with our tailored digital solutions.</p>
-            <Link to="/contact" className="inline-block px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)]">
+            <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Ready to scale your business?</h2>
+            <p className="text-gray-300 mb-10 text-lg leading-relaxed">
+              Let's discuss how we can help you achieve your goals with our tailored digital solutions and innovative strategies.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-block btn-primary"
+            >
               Start Your Project Today
             </Link>
           </motion.div>
