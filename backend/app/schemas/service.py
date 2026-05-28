@@ -10,6 +10,7 @@ class ServiceBase(BaseModel):
     features: List[str] = []
     display_order: int = 0
     is_active: bool = True
+    color: Optional[str] = None
     meta_title: Optional[str] = None
     meta_description: Optional[str] = None
 
@@ -24,6 +25,7 @@ class ServiceUpdate(BaseModel):
     features: Optional[List[str]] = None
     display_order: Optional[int] = None
     is_active: Optional[bool] = None
+    color: Optional[str] = None
     meta_title: Optional[str] = None
     meta_description: Optional[str] = None
 
@@ -33,4 +35,4 @@ class ServiceResponse(ServiceBase):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True

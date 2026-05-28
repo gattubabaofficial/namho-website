@@ -17,6 +17,7 @@ class Service(Base, TimestampMixin):
     features = Column(JSON, default=list) # Storing list of features as JSON
     display_order = Column(Integer, default=0)
     is_active = Column(Boolean, default=True, index=True)
+    color = Column(String(100), nullable=True)
     
     # Adding SEO fields
     meta_title = Column(String(100), nullable=True)

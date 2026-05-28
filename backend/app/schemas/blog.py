@@ -15,7 +15,7 @@ class CategoryResponse(CategoryBase):
     created_at: datetime
     
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TagBase(BaseModel):
     name: str
@@ -28,7 +28,7 @@ class TagResponse(TagBase):
     slug: str
     
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class BlogPostBase(BaseModel):
     title: str
@@ -69,4 +69,4 @@ class BlogPostResponse(BlogPostBase):
     tags: List[TagResponse] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True

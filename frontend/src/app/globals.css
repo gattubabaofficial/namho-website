@@ -1,0 +1,271 @@
+/* Fonts loaded via <link preconnect> in layout.tsx — no duplicate @import needed */
+
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --font-bricolage: "Bricolage Grotesque", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+/* ========== SCROLLBAR ========== */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes cinematicEntrance {
+  0% {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Used by Hero rings & Systems card visuals via inline style */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Hotspot pulse — GPU-friendly alternative to animate-ping */
+@keyframes hotspotPing {
+  0%   { box-shadow: 0 0 0 0 currentColor; }
+  70%  { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+}
+
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes shimmerMove {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-20deg);
+  }
+}
+
+@keyframes animationIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes spinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes fanSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) rotate(2deg) scale(0.96);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes barEqualizer {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.3);
+  }
+}
+
+/* ========== UTILITY CLASSES ========== */
+.animate-cinematic {
+  animation: cinematicEntrance 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-slide-up {
+  animation: slideUpFade 1s ease-out forwards;
+}
+
+.animate-ticker {
+  animation: ticker 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-shimmer-effect {
+  animation: shimmerMove 3s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-spin-slow-reverse {
+  animation: spinReverse 16s linear infinite;
+  will-change: transform;
+}
+
+/* In-view Animations */
+.animate-on-scroll {
+  opacity: 0;
+  animation: animationIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-play-state: paused;
+  will-change: opacity, transform;
+}
+.animate-on-scroll.animate {
+  animation-play-state: running;
+}
+.animate-on-scroll.animate-done {
+  will-change: auto;
+}
+
+.animate-on-scroll[data-anim="slide-left"].animate {
+  animation: slideInLeft 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.animate-on-scroll[data-anim="slide-right"].animate {
+  animation: slideInRight 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Bar Equalizer */
+.bar-anim {
+  transform-origin: bottom;
+  animation-name: barEqualizer;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+}
+
+/* Grain Overlay — absolute instead of fixed to avoid per-scroll repaint */
+.bg-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  will-change: auto;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+/* Font helpers */
+.font-bricolage {
+  font-family: "Bricolage Grotesque", sans-serif !important;
+}
+.font-serif-custom {
+  font-family: "Playfair Display", serif !important;
+}
+
+/* ========== PERFORMANCE: CONTENT VISIBILITY ========== */
+/* Skip rendering off-screen sections entirely until scrolled into view */
+#projects,
+#infrastructure,
+#timeline,
+#process,
+#systems,
+#careers {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
+/* GPU compositing hint for animated card images */
+.group img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ========== REDUCED MOTION ========== */
+/* Respect user preference — disable all animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-on-scroll {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

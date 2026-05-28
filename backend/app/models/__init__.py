@@ -11,6 +11,7 @@ from .settings import SiteSetting
 from .activity_log import ActivityLog
 from .social_post import SocialPost
 from .newsletter import NewsletterSubscriber
+from .payment import PaymentTransaction
 
 __all__ = [
     "Base",
@@ -30,4 +31,5 @@ __all__ = [
     "ActivityLog",
     "SocialPost",
     "NewsletterSubscriber",
+    "PaymentTransaction",
 ]
