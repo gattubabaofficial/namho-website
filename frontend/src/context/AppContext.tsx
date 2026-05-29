@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { getApiUrl } from "@/lib/api";
 
 interface AppContextType {
@@ -18,6 +19,7 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [projects, setProjects] = useState<any[]>([]);
   const [services, setServices] = useState<any[]>([]);
@@ -157,6 +159,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     loadAllData();
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      if (typeof window !== "undefined" && typeof (window as any).initInViewAnimations === "function") {
+        (window as any).initInViewAnimations();
+      }
+    };
+
+    // Delay slightly to allow Next.js route transition and DOM mount to finish
+    const timer = setTimeout(handleRouteChange, 80);
+
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   return (
     <AppContext.Provider
