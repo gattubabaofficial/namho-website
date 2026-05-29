@@ -73,12 +73,11 @@ app.include_router(payments.router)
 # ── Page route ────────────────────────────────────────────────────────────
 @app.get("/", include_in_schema=False)
 async def index(request: Request):
-    """Redirects dynamically to the frontend on port 3000 preserving the host."""
+    """Redirects to the frontend. Defaults to localhost:3000 for local development, otherwise settings.FRONTEND_URL."""
     host = request.url.hostname or "localhost"
-    if host == "0.0.0.0":
-        host = "localhost"
-    redirect_url = f"http://{host}:3000"
-    return RedirectResponse(url=redirect_url)
+    if host in ["localhost", "127.0.0.1", "0.0.0.0"]:
+        return RedirectResponse(url="http://localhost:3000")
+    return RedirectResponse(url=settings.FRONTEND_URL)
 
 # ── Health route ─────────────────────────────────────────────────────────
 @app.get("/api/v1/health", tags=["Health"])
