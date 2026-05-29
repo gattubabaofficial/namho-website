@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from .config import settings
-from .database import create_tables, get_db
+from .database import create_tables, get_db, SessionLocal
+from .models import SiteSetting
 from .models.contact import ContactMessage
 from .models.newsletter import NewsletterSubscriber
 from .schemas.contact import ContactMessageCreate
@@ -21,6 +22,19 @@ from .routers import (
 
 # Create tables for SQLite if they don't exist
 create_tables()
+
+# Auto-seed database if empty
+db = SessionLocal()
+try:
+    if not db.query(SiteSetting).first():
+        print("Database is empty. Auto-seeding...")
+        try:
+            from seed import seed_db
+            seed_db()
+        except Exception as e:
+            print(f"Auto-seeding failed or seed script could not be imported: {e}")
+finally:
+    db.close()
 
 # Ensure upload directory exists
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
