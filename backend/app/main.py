@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -71,17 +71,21 @@ app.include_router(newsletter.router)
 app.include_router(payments.router)
 
 # ── Page route ────────────────────────────────────────────────────────────
-@app.get("/", include_in_schema=False)
+@app.api_route("/", methods=["GET", "HEAD"], include_in_schema=False)
 async def index(request: Request):
-    """Redirects to the frontend. Defaults to localhost:3000 for local development, otherwise settings.FRONTEND_URL."""
+    """Handles GET and HEAD requests at the root. Redirects GET to the frontend; returns 200 for HEAD."""
+    if request.method == "HEAD":
+        return Response(status_code=200)
     host = request.url.hostname or "localhost"
     if host in ["localhost", "127.0.0.1", "0.0.0.0"]:
         return RedirectResponse(url="http://localhost:3000")
     return RedirectResponse(url=settings.FRONTEND_URL)
 
 # ── Health route ─────────────────────────────────────────────────────────
-@app.get("/api/v1/health", tags=["Health"])
-def health_check():
+@app.api_route("/api/v1/health", methods=["GET", "HEAD"], tags=["Health"])
+def health_check(request: Request):
+    if request.method == "HEAD":
+        return Response(status_code=200)
     return {"status": "ok", "message": "Namho API is running"}
 
 # ── Fallback Legacy /api routes ──────────────────────────────────────────
